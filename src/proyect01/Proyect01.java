@@ -5,6 +5,9 @@
  */
 package proyect01;
 
+import Data.Data;
+import java.io.IOException;
+
 /**
  *
  * @author esteb
@@ -14,8 +17,11 @@ public class Proyect01 {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String[] args) throws IOException {
+        Data data = new Data();
+        data.deleteEarthquake(1116557876);
+        System.out.println(data.toString());
+        
     }
     
 }
