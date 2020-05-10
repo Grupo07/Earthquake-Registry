@@ -63,6 +63,14 @@ public class EarthquakeData {
         this.id = id;
     }
 
+    public ProvinceType getProvince() {
+        return province;
+    }
+
+    public void setProvince(ProvinceType province) {
+        this.province = province;
+    }
+
     public LocalDateTime getDate() {
         return date;
     }
@@ -70,6 +78,64 @@ public class EarthquakeData {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
+    public float getDepth() {
+        return depth;
+    }
+
+    public void setDepth(float depth) {
+        this.depth = depth;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public OriginFailureType getOriginFailure() {
+        return originFailure;
+    }
+
+    public void setOriginFailure(OriginFailureType originFailure) {
+        this.originFailure = originFailure;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public float getMagnitude() {
+        return magnitude;
+    }
+
+    public void setMagnitude(float magnitude) {
+        this.magnitude = magnitude;
+    }
+
+    public MagnitudeType getMagnitudeType() {
+        return magnitudeType;
+    }
+
+    public void setMagnitudeType(MagnitudeType magnitudeType) {
+        this.magnitudeType = magnitudeType;
+    }
+    
+    
     
     public void detectMagnitudeType(){
         
