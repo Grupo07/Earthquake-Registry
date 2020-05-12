@@ -23,7 +23,7 @@ public class CoordinateMap extends JFrame implements JMapViewerEventListener {
     private final int defaultZoomLevel = 9;
 
     public CoordinateMap(double latitude, double longitude) {
-        super("Map");
+        super("Origen Del Sismo");
 
         setUpMap();
 
