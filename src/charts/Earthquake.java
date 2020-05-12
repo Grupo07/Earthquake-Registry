@@ -3,26 +3,6 @@ package charts;
 
 import java.time.LocalDateTime;
 
-enum FaultOrigin {
-  SUBDUCCION_DE_PLACA,
-  CHOQUE_DE_PLACAS,
-  TECTONICO_POR_SUBDUCCION,
-  DEFORMACION_INTERNA,
-  FALLAMIENTO_LOCAL,
-  TECTONICO_POR_FALLA_LOCAL
-}
-
-enum Province {
-    GUANACASTE,
-    ALAJUELA,
-    HEREDIA,
-    SAN_JOSE,
-    CARTAGO,
-    LIMON,
-    PUNTARENAS,
-    MAR
-}
-
 public class Earthquake {
     
     private LocalDateTime date;
