@@ -1,5 +1,8 @@
 package tests;
 
+import data.Earthquake;
+import data.FaultOrigin;
+import data.Province;
 import charts.*;
 import java.time.LocalDateTime;
 import java.time.Month;

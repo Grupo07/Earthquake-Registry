@@ -1,6 +1,8 @@
 
-package charts;
+package data;
 
+import data.FaultOrigin;
+import data.Province;
 import java.time.LocalDateTime;
 
 public class Earthquake {

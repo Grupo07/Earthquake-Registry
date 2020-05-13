@@ -1,5 +1,5 @@
 
-package charts;
+package data;
 
 public enum FaultOrigin {
   SUBDUCCION_DE_PLACA,

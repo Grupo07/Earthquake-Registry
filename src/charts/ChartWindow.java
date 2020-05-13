@@ -2,6 +2,8 @@
 package charts;
 
 
+import data.Earthquake;
+import data.Province;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;

@@ -2,6 +2,7 @@
 package charts;
 
 
+import data.Earthquake;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import org.jfree.data.general.DefaultPieDataset;

@@ -1,6 +1,7 @@
 
 package charts;
 
+import data.Earthquake;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.Month;

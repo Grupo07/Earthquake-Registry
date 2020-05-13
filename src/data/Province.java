@@ -1,5 +1,5 @@
 
-package charts;
+package data;
 
 public enum Province {
     GUANACASTE,
