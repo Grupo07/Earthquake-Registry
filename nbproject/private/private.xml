@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/D:/ProjectsNetbeans/Proyect01/src/Data/EarthquakeData.java</file>
             <file>file:/D:/ProjectsNetbeans/Proyect01/src/proyect01/Proyect01.java</file>
@@ -9,6 +10,13 @@
             <file>file:/D:/ProjectsNetbeans/Proyect01/src/Data/MagnitudeType.java</file>
             <file>file:/D:/ProjectsNetbeans/Proyect01/src/Data/Data.java</file>
             <file>file:/D:/ProjectsNetbeans/Proyect01/src/Data/ProvinceType.java</file>
+=======
+        <group name="GdxLearns">
+            <file>file:/C:/Users/luism/Desktop/__/POO/Earthquake%20Registry/Earthquake%20Registry/src/tests/Charts.java</file>
+            <file>file:/C:/Users/luism/Desktop/__/POO/Earthquake%20Registry/Earthquake%20Registry/src/charts/FaultOrigin.java</file>
+            <file>file:/C:/Users/luism/Desktop/__/POO/Earthquake%20Registry/Earthquake%20Registry/src/charts/Earthquake.java</file>
+            <file>file:/C:/Users/luism/Desktop/__/POO/Earthquake%20Registry/Earthquake%20Registry/src/charts/Province.java</file>
+>>>>>>> chartsFeature
         </group>
     </open-files>
 </project-private>

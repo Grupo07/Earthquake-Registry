@@ -19,7 +19,7 @@ public class Proyect01 {
      */
     public static void main(String[] args) throws IOException {
         Data data = new Data();
-        data.deleteEarthquake(1116557876);
+        
         System.out.println(data.toString());
         
     }
