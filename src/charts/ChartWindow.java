@@ -9,11 +9,18 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-
+/**
+ *
+ * @author luism
+ */
 public class ChartWindow extends JFrame{
     
     private ArrayList<Earthquake> earthquakes;
     
+    /**
+     *
+     * @param earthquakes
+     */
     public ChartWindow(ArrayList<Earthquake> earthquakes) {
         super("Graficos de Sismos");
         this.setSize(800, 500);
@@ -22,26 +29,43 @@ public class ChartWindow extends JFrame{
         this.earthquakes = earthquakes;
     }
     
+    /**
+     *
+     */
     public void showEarthquakesByFaultOrigin() {
         JPanel chartPanel = new PieChart(this.earthquakes).getPanel();
         this.setContentPane(chartPanel);
     }
     
+    /**
+     *
+     * @param year
+     */
     public void showEarthquakesPerMonth(int year) {
         JPanel chartPanel = new BarChart(this.earthquakes, year).getPanel();
         this.setContentPane(chartPanel);
     }
     
+    /**
+     *
+     */
     public void showEarthquakesByMagnitudeRanges() {
         JPanel chartPanel = new HistogramChart(this.earthquakes).getPanel();
         this.setContentPane(chartPanel);
     }
     
+    /**
+     *
+     * @param province
+     */
     public void showEarthquakesByMagnitudeRanges(Province province) {
         JPanel chartPanel = new HistogramChart(this.earthquakes, province).getPanel();
         this.setContentPane(chartPanel);
     }
     
+    /**
+     *
+     */
     public void display() {
         this.setVisible(true);
     }
