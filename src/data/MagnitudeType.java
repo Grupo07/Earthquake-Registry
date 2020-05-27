@@ -10,5 +10,12 @@ package data;
  * @author esteb
  */
 public enum MagnitudeType {
-    Micro, Menor, Ligero, Moderado, Fuerte, Mayor, Gran, Épico;
+    MICRO,
+    MENOR,
+    LIGERO,
+    MODERADO,
+    FUERTE,
+    MAYOR,
+    GRAN,
+    ÉPICO;
 }

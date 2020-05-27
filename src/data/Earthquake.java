@@ -140,21 +140,21 @@ public class Earthquake {
     public void detectMagnitudeType(){
         
         if(magnitude<2){
-            magnitudeType = MagnitudeType.Micro;
+            magnitudeType = MagnitudeType.MICRO;
         } else if (magnitude >= 2 && magnitude < 4){
-            magnitudeType = MagnitudeType.Menor;
+            magnitudeType = MagnitudeType.MENOR;
         } else if (magnitude >= 4 && magnitude < 5){
-            magnitudeType = MagnitudeType.Ligero;
+            magnitudeType = MagnitudeType.LIGERO;
         } else if (magnitude >= 5 && magnitude < 6){
-            magnitudeType = MagnitudeType.Moderado;
+            magnitudeType = MagnitudeType.MODERADO;
         } else if (magnitude >= 6 && magnitude < 7){
-            magnitudeType = MagnitudeType.Fuerte;
+            magnitudeType = MagnitudeType.FUERTE;
         } else if (magnitude >= 7 && magnitude < 8){
-            magnitudeType = MagnitudeType.Mayor;
+            magnitudeType = MagnitudeType.MAYOR;
         } else if (magnitude >= 8 && magnitude < 10){
-            magnitudeType = MagnitudeType.Gran;
+            magnitudeType = MagnitudeType.GRAN;
         } else if (magnitude > 10){
-            magnitudeType = MagnitudeType.Épico;
+            magnitudeType = MagnitudeType.ÉPICO;
         } else {
             System.out.println("Valor de magnitud no valido:"+ magnitude);
         }

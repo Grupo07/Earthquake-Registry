@@ -2,7 +2,7 @@
 package charts;
 
 
-import data.Earthquake;
+import data.Data;
 import data.Province;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -12,33 +12,33 @@ import javax.swing.WindowConstants;
 
 public class ChartWindow extends JFrame{
     
-    private ArrayList<Earthquake> earthquakes;
+    private Data data;
     
-    public ChartWindow(ArrayList<Earthquake> earthquakes) {
+    public ChartWindow(Data earthquakes) {
         super("Graficos de Sismos");
         this.setSize(800, 500);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.earthquakes = earthquakes;
+        this.data = earthquakes;
     }
     
     public void showEarthquakesByFaultOrigin() {
-        JPanel chartPanel = new PieChart(this.earthquakes).getPanel();
+        JPanel chartPanel = new PieChart(this.data.getAll()).getPanel();
         this.setContentPane(chartPanel);
     }
     
     public void showEarthquakesPerMonth(int year) {
-        JPanel chartPanel = new BarChart(this.earthquakes, year).getPanel();
+        JPanel chartPanel = new BarChart(this.data.getAll(), year).getPanel();
         this.setContentPane(chartPanel);
     }
     
     public void showEarthquakesByMagnitudeRanges() {
-        JPanel chartPanel = new HistogramChart(this.earthquakes).getPanel();
+        JPanel chartPanel = new HistogramChart(this.data.getAll()).getPanel();
         this.setContentPane(chartPanel);
     }
     
     public void showEarthquakesByMagnitudeRanges(Province province) {
-        JPanel chartPanel = new HistogramChart(this.earthquakes, province).getPanel();
+        JPanel chartPanel = new HistogramChart(this.data.getAll(), province).getPanel();
         this.setContentPane(chartPanel);
     }
     

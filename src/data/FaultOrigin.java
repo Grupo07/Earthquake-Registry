@@ -10,7 +10,7 @@ package data;
  * @author esteb
  */
 public enum FaultOrigin {
-    SUBDUCCION_DE_PLACA,
+  SUBDUCCION_DE_PLACA,
   CHOQUE_DE_PLACAS,
   TECTONICO_POR_SUBDUCCION,
   DEFORMACION_INTERNA,
