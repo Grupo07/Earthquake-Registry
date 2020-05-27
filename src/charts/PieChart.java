@@ -43,7 +43,7 @@ public class PieChart {
         
         for (Earthquake earthquake : earthquakes) {
             
-            String faultOrigin = earthquake.getFaultOrigin().toString().replace("_", " ");
+            String faultOrigin = earthquake.getOriginFailure().toString().replace("_", " ");
             
             boolean originInDataSet = (dataset.getIndex(faultOrigin) != -1);
             

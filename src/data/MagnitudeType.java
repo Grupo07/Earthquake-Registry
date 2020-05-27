@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Data;
+package data;
 
 /**
  *
  * @author esteb
  */
-public enum ProvinceType {
-    Cartago, SanJose, Heredia, Alajuela, Puntarenas, Limón, Guanacaste;
+public enum MagnitudeType {
+    Micro, Menor, Ligero, Moderado, Fuerte, Mayor, Gran, Épico;
 }

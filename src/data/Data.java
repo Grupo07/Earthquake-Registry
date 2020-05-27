@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Data;
+package data;
 
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
@@ -20,21 +20,21 @@ import java.util.Random;
  * @author esteb
  */
 public class Data {
-    private ArrayList<EarthquakeData> data = new ArrayList<EarthquakeData>();
+    private ArrayList<Earthquake> data = new ArrayList<Earthquake>();
     
     public Data(){ readFile(); }
     
-    public void addEarthquake(ProvinceType province, LocalDateTime date, 
+    public void addEarthquake(Province province, LocalDateTime date, 
             float depth, double lat, double lon, 
-            OriginFailureType originFailure, String details, float magnitude) throws IOException{
+            FaultOrigin originFailure, String details, float magnitude) throws IOException{
         int id = generateId();
-        EarthquakeData newData = new EarthquakeData(id,province,date,depth,lat,
+        Earthquake newData = new Earthquake(id,province,date,depth,lat,
                 lon,originFailure,details,magnitude);
         data.add(newData);
         saveFile();
     }
     
-    public EarthquakeData getEarthquake(int id){
+    public Earthquake getEarthquake(int id){
         int index = 0;
         while (index < data.size()){
             if(data.get(index).getId() == id){
@@ -49,11 +49,11 @@ public class Data {
         return data.size();
     }
     
-    public ArrayList<EarthquakeData> getAll(){
+    public ArrayList<Earthquake> getAll(){
         return data;
     }
     
-    public void updateEarthquake(int id,EarthquakeData newData) throws IOException{
+    public void updateEarthquake(int id,Earthquake newData) throws IOException{
         data.set(getIndexEarthquake(id), newData);
         saveFile();
     }
@@ -64,7 +64,7 @@ public class Data {
     }
     
     public void deleteAll() throws IOException {
-        data = new ArrayList<EarthquakeData>();
+        data = new ArrayList<Earthquake>();
         saveFile();
     }
     
@@ -114,21 +114,21 @@ public class Data {
     }
     private void readFile(){
         try {
-            data = new ArrayList<EarthquakeData>();
+            data = new ArrayList<Earthquake>();
             CsvReader reader = new CsvReader("Data.csv");
             reader.readHeaders();
             while (reader.readRecord()) {
                 int id = Integer.parseInt(reader.get("Id"));
-                ProvinceType province = ProvinceType.valueOf(reader.get("Province"));
+                Province province = Province.valueOf(reader.get("Province"));
                 LocalDateTime date = LocalDateTime.parse(reader.get("Date"));
                 Float depth = Float.parseFloat(reader.get("Depth"));
                 Double lat = Double.parseDouble(reader.get("Lat"));
                 Double lon = Double.parseDouble(reader.get("Lon"));
-                OriginFailureType originFailure = OriginFailureType.valueOf(reader.get("OriginFailure"));
+                FaultOrigin originFailure = FaultOrigin.valueOf(reader.get("OriginFailure"));
                 String details = reader.get("Details");
                 Float magnitude = Float.parseFloat(reader.get("Magnitude"));
                 MagnitudeType magnitudeType = MagnitudeType.valueOf(reader.get("MagnitudeType"));
-                EarthquakeData newData = new EarthquakeData(id,province,date,depth,lat,
+                Earthquake newData = new Earthquake(id,province,date,depth,lat,
                 lon,originFailure,details,magnitude,magnitudeType);
                 data.add(newData);        
             }
@@ -149,9 +149,9 @@ public class Data {
     }
     
      private void sortByDate(){
-        Collections.sort(data, new Comparator<EarthquakeData>(){
+        Collections.sort(data, new Comparator<Earthquake>(){
                 @Override
-                public int compare(EarthquakeData earthquake1, EarthquakeData earthquake2) {
+                public int compare(Earthquake earthquake1, Earthquake earthquake2) {
                     return earthquake1.getDate().compareTo(earthquake2.getDate());
             }
         });
