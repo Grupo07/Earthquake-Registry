@@ -5,43 +5,66 @@ package charts;
 import data.Earthquake;
 import data.Province;
 import java.util.ArrayList;
-import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.general.Dataset;
 import org.jfree.data.statistics.SimpleHistogramBin;
 import org.jfree.data.statistics.SimpleHistogramDataset;
 
-public class HistogramChart {
+/**
+ * Histogram of the magnitude ranges 
+ * of a list of earthquakes. Can receive
+ * a province as restriction or not.
+ * 
+ * @author Luis Mariano Ramirez Segura
+ */
+public class HistogramChart extends Chart {
     
-    private JPanel panel;
-    private Province locationRestriction;
+    private Province provinceRestriction;
     
+    /**
+     * Sets the earthquakes to the parent constructor,
+     * sets the province restriction to null and calls to create 
+     * the chart panel again.
+     * 
+     * @param earthquakes list of unordered earthquakes 
+     */
     public HistogramChart(ArrayList<Earthquake> earthquakes) {
-        this.locationRestriction = null;
-        this.panel = getChartPanel(earthquakes);
+        super(earthquakes);
+        this.provinceRestriction = null;
+        super.panel = super.getChartPanel();
     }
     
-    public HistogramChart(ArrayList<Earthquake> earthquakes, Province location) {
-        this.locationRestriction = location;
-        this.panel = getChartPanel(earthquakes);
+    /**
+     * Sets the earthquakes to the parent constructor,
+     * sets the province restriction and calls to create 
+     * the chart panel again.
+     * 
+     * @param earthquakes list of unordered earthquakes 
+     * @param province province restriction
+     */
+    public HistogramChart(ArrayList<Earthquake> earthquakes, Province province) {
+        super(earthquakes);
+        this.provinceRestriction = province;
+        super.panel = super.getChartPanel();
     }
     
-    private JPanel getChartPanel(ArrayList<Earthquake> earthquakes) {
-        JFreeChart chart = createChart(earthquakes);
-        return new ChartPanel(chart);
-    }
-    
-    private JFreeChart createChart(ArrayList<Earthquake> earthquakes) {
+    /**
+     * Creates the histogram.
+     * 
+     * @return the JFreeChart histogram
+     */
+    @Override
+    protected JFreeChart createChart() {
         
-        SimpleHistogramDataset dataset = createDataSet(earthquakes);    
+        SimpleHistogramDataset dataset = (SimpleHistogramDataset) createDataSet();    
         
         String title = "Sismos Por Magnitud";
         
-        if (this.locationRestriction != null) {
-            String location = locationRestriction.toString().toLowerCase();
+        if (this.provinceRestriction != null) {
+            String location = provinceRestriction.toString().toLowerCase();
             title = title + " En " + location.substring(0, 1).toUpperCase() + location.substring(1);
         }
         
@@ -62,7 +85,18 @@ public class HistogramChart {
         return chart;
     }
     
-    private SimpleHistogramDataset createDataSet(ArrayList<Earthquake> earthquakes) {
+    /**
+     * Creates the chart dataset
+     * by counting the total 
+     * amount of frequencies
+     * in each magnitude range. 
+     * The ranges go from 0 to 11, 
+     * divided by units of 1.
+     * 
+     * @return the histogram dataset 
+     */
+    @Override
+    protected Dataset createDataSet() {
         
         SimpleHistogramDataset dataset = new SimpleHistogramDataset("Histogram");
         
@@ -73,13 +107,13 @@ public class HistogramChart {
             bins[i] = new SimpleHistogramBin(i, i + 1, true, false);
         
         boolean earthquakeIsValid;
-        for (Earthquake earthquake : earthquakes) {
+        for (Earthquake earthquake : super.earthquakes) {
             
             earthquakeIsValid = true;
             
-            if (this.locationRestriction != null) {
+            if (this.provinceRestriction != null) {
                 Province earthquakeLocation = earthquake.getProvince();
-                if (locationRestriction != earthquakeLocation) {
+                if (provinceRestriction != earthquakeLocation) {
                     earthquakeIsValid = false;
                 }
             }
@@ -101,10 +135,6 @@ public class HistogramChart {
             dataset.addBin(bin); 
 
         return dataset;
-    }
-    
-    public JPanel getPanel() {
-        return this.panel;
     }
     
 }

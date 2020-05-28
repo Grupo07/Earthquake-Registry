@@ -4,29 +4,38 @@ package charts;
 
 import data.Earthquake;
 import java.util.ArrayList;
-import javax.swing.JPanel;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.Dataset;
 
-
-public class PieChart {
+/**
+ * Pie chart of frequencies 
+ * of seismic origins of a 
+ * list of earthquakes.
+ * 
+ * @author Luis Mariano Ramirez Segura
+ */
+public class PieChart extends Chart {
     
-    private JPanel panel;
-    
+    /**
+     * Sets the earthquakes to the parent constructor.
+     * 
+     * @param earthquakes list of unordered earthquakes 
+     */
     public PieChart(ArrayList<Earthquake> earthquakes) {
-        this.panel = getChartPanel(earthquakes);
+        super(earthquakes);
     }
     
-    private JPanel getChartPanel(ArrayList<Earthquake> earthquakes) {
-        JFreeChart chart = createChart(earthquakes);
-        return new ChartPanel(chart);
-    }
-    
-    private JFreeChart createChart(ArrayList<Earthquake> earthquakes) {
-        PieDataset dataset = createDataSet(earthquakes);
+    /**
+     * Creates the pie chart.
+     * 
+     * @return the JFreeChart pie chart
+     */
+    @Override
+    protected JFreeChart createChart() {
+        PieDataset dataset = (PieDataset) createDataSet();
         JFreeChart  chart = ChartFactory.createPieChart(
                 "Sismos Por Origen", 
                 dataset, 
@@ -36,12 +45,20 @@ public class PieChart {
         );
         return chart;
     }
-    
-    private PieDataset createDataSet(ArrayList<Earthquake> earthquakes) {
-        
+
+    /**
+     * Creates the chart dataset
+     * by counting the total 
+     * amount of frequencies
+     * per seismic origin.
+     * 
+     * @return pie chart dataset 
+     */
+    @Override
+    protected Dataset createDataSet() {
         DefaultPieDataset dataset = new DefaultPieDataset( );
         
-        for (Earthquake earthquake : earthquakes) {
+        for (Earthquake earthquake : super.earthquakes) {
             
             String faultOrigin = earthquake.getOriginFailure().toString().replace("_", " ");
             
@@ -57,10 +74,6 @@ public class PieChart {
         }
 
         return dataset;
-    }
-    
-    public JPanel getPanel() {
-        return this.panel;
     }
     
 }
