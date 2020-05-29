@@ -42,6 +42,7 @@ public class Data {
             }
             index++;
         }
+        System.out.println("El sismo id:" + id + " no fue encontrado");
         return null;
     }
     

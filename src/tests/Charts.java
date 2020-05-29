@@ -8,10 +8,10 @@ public class Charts {
     
     public static void main(String[] args) {
         
-        testPieChart();
-        testBarChart(2002);
-        testHistogram();
-        testHistogram(Province.CARTAGO);
+        //testPieChart();
+        testBarChart(2005);
+        //testHistogram();
+        //testHistogram(Province.CARTAGO);
     }
     
     private static void testPieChart() {
