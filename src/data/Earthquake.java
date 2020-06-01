@@ -1,17 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package data;
 
 import java.time.LocalDateTime;
 
 /**
+ * Records the information of an earthquake
  *
- * @author esteb
+ * @author Esteban Guzmán R.
  */
 public class Earthquake {
+
     private int id;
     private Province province;
     private LocalDateTime date;
@@ -22,11 +19,12 @@ public class Earthquake {
     private String details;
     private float magnitude;
     private MagnitudeType magnitudeType;
-    
-    public Earthquake(){}
 
-    public Earthquake(int id, Province province, LocalDateTime date, 
-            float depth, double lat, double lon, FaultOrigin originFailure, 
+    public Earthquake() {
+    }
+
+    public Earthquake(int id, Province province, LocalDateTime date,
+            float depth, double lat, double lon, FaultOrigin originFailure,
             String details, float magnitude, MagnitudeType magnitudeType) {
         this.id = id;
         this.province = province;
@@ -40,8 +38,8 @@ public class Earthquake {
         this.magnitudeType = magnitudeType;
     }
 
-    public Earthquake(int id, Province province, LocalDateTime date, 
-            float depth, double lat, double lon, FaultOrigin originFailure, 
+    public Earthquake(int id, Province province, LocalDateTime date,
+            float depth, double lat, double lon, FaultOrigin originFailure,
             String details, float magnitude) {
         this.id = id;
         this.province = province;
@@ -134,49 +132,52 @@ public class Earthquake {
     public void setMagnitudeType(MagnitudeType magnitudeType) {
         this.magnitudeType = magnitudeType;
     }
-    
-    
-    
-    public void detectMagnitudeType(){
-        
-        if(magnitude<2){
+
+    /**
+     * When creating an earthquake without magnitude type, it detects the
+     * magnitude type.
+     */
+    private void detectMagnitudeType() {
+
+        if (magnitude < 2) {
             magnitudeType = MagnitudeType.MICRO;
-        } else if (magnitude >= 2 && magnitude < 4){
+        } else if (magnitude >= 2 && magnitude < 4) {
             magnitudeType = MagnitudeType.MENOR;
-        } else if (magnitude >= 4 && magnitude < 5){
+        } else if (magnitude >= 4 && magnitude < 5) {
             magnitudeType = MagnitudeType.LIGERO;
-        } else if (magnitude >= 5 && magnitude < 6){
+        } else if (magnitude >= 5 && magnitude < 6) {
             magnitudeType = MagnitudeType.MODERADO;
-        } else if (magnitude >= 6 && magnitude < 7){
+        } else if (magnitude >= 6 && magnitude < 7) {
             magnitudeType = MagnitudeType.FUERTE;
-        } else if (magnitude >= 7 && magnitude < 8){
+        } else if (magnitude >= 7 && magnitude < 8) {
             magnitudeType = MagnitudeType.MAYOR;
-        } else if (magnitude >= 8 && magnitude < 10){
+        } else if (magnitude >= 8 && magnitude < 10) {
             magnitudeType = MagnitudeType.GRAN;
-        } else if (magnitude > 10){
+        } else if (magnitude > 10) {
             magnitudeType = MagnitudeType.ÉPICO;
         } else {
-            System.out.println("Valor de magnitud no valido:"+ magnitude);
+            System.out.println("Valor de magnitud no valido:" + magnitude);
         }
     }
 
-    
     public String toString() {
-        return "EarthquakeData{" + "id=" + id + ", province=" + province +
-                ", date=" + date + ", depth=" + depth + ", lat=" + lat + 
-                ", lon=" + lon + ", originFailure=" + originFailure + 
-                ", details=" + details + ", magnitude=" + magnitude + 
-                ", magnitudeType=" + magnitudeType + '}';
+        return "EarthquakeData{" + "id=" + id + ", province=" + province
+                + ", date=" + date + ", depth=" + depth + ", lat=" + lat
+                + ", lon=" + lon + ", originFailure=" + originFailure
+                + ", details=" + details + ", magnitude=" + magnitude
+                + ", magnitudeType=" + magnitudeType + '}';
     }
-    public String[] toArrayString(){
+
+    public String[] toArrayString() {
         String id = Integer.toString(this.id);
         String date = this.date.toString();
         String depth = Float.toString(this.depth);
         String lat = Double.toString(this.lat);
         String lon = Double.toString(this.lon);
         String magnitude = Float.toString(this.magnitude);
-        String[] result = { id, province.name(), date, depth, lat, lon, originFailure.name(), details, magnitude, magnitudeType.name()};
+        String[] result = {id, province.name(), date, depth, lat, lon, 
+            originFailure.name(), details, magnitude, magnitudeType.name()};
         return result;
     }
-    
+
 }

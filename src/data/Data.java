@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package data;
 
 import com.csvreader.CsvReader;
@@ -16,28 +12,52 @@ import java.time.LocalDateTime;
 import java.util.Random;
 
 /**
- *
- * @author esteb
+ *In charge of manipulating the information of all the earthquakes registered in the system.
+ * @author Esteban Guzmán R.
  */
 public class Data {
+
     private ArrayList<Earthquake> data = new ArrayList<Earthquake>();
-    
-    public Data(){ readFile(); }
-    
-    public void addEarthquake(Province province, LocalDateTime date, 
-            float depth, double lat, double lon, 
-            FaultOrigin originFailure, String details, float magnitude) throws IOException{
+
+    public Data() {
+        readFile();
+    }
+
+    /**
+     * Create and add a earthquake. Sort the list of Earthquake by date and save
+     * the cvs file.
+     *
+     * @param province
+     * @param date
+     * @param depth depth in KM
+     * @param lat latitude
+     * @param lon longitud
+     * @param originFailure
+     * @param details
+     * @param magnitude magnitude of earthquake
+     * @throws IOException
+     */
+    public void addEarthquake(Province province, LocalDateTime date,
+            float depth, double lat, double lon,
+            FaultOrigin originFailure, String details, float magnitude) 
+            throws IOException {
         int id = generateId();
-        Earthquake newData = new Earthquake(id,province,date,depth,lat,
-                lon,originFailure,details,magnitude);
+        Earthquake newData = new Earthquake(id, province, date, depth, lat,
+                lon, originFailure, details, magnitude);
         data.add(newData);
         saveFile();
     }
-    
-    public Earthquake getEarthquake(int id){
+
+    /**
+     * Search an Earthquake by id
+     *
+     * @param id id of earthquake
+     * @return earthquake when found it and null when not
+     */
+    public Earthquake getEarthquake(int id) {
         int index = 0;
-        while (index < data.size()){
-            if(data.get(index).getId() == id){
+        while (index < data.size()) {
+            if (data.get(index).getId() == id) {
                 return data.get(index);
             }
             index++;
@@ -45,75 +65,111 @@ public class Data {
         System.out.println("El sismo id:" + id + " no fue encontrado");
         return null;
     }
-    
-    public int size(){
+
+    /**
+     * Number of earthquakes registered
+     *
+     * @return Number of earthquakes registered
+     */
+    public int size() {
         return data.size();
     }
-    
-    public ArrayList<Earthquake> getAll(){
+
+    public ArrayList<Earthquake> getAll() {
         return data;
     }
-    
-    public void updateEarthquake(int id,Earthquake newData) throws IOException{
+
+    /**
+     * Update a earthquake and save csv file
+     *
+     * @param id id of earthquake to update
+     * @param newData new earthquake update
+     * @throws IOException
+     */
+    public void updateEarthquake(int id, Earthquake newData) throws IOException {
         data.set(getIndexEarthquake(id), newData);
         saveFile();
     }
-    
-    public void deleteEarthquake(int id) throws IOException{
+
+    /**
+     * Delete earthquake and save csv file
+     *
+     * @param id id of earthquake to delete
+     * @throws IOException
+     */
+    public void deleteEarthquake(int id) throws IOException {
         data.remove(getIndexEarthquake(id));
         saveFile();
     }
-    
+
     public void deleteAll() throws IOException {
         data = new ArrayList<Earthquake>();
         saveFile();
     }
-    
-    private int getIndexEarthquake(int id){
+
+    private int getIndexEarthquake(int id) {
         int index = 0;
-        while (index < data.size()){
-            if(data.get(index).getId() == id){
+        while (index < data.size()) {
+            if (data.get(index).getId() == id) {
                 return index;
             }
             index++;
         }
         return -1;
     }
-    
+
+    /**
+     * Generate a random unique id for new earthquakes
+     *
+     * @return random unique id
+     */
     private int generateId() {
         Random random = new Random();
         int newId = random.nextInt(Integer.MAX_VALUE);
-        while(getEarthquake(newId) != null){
-            System.out.println("Id repetido:"+newId);
+        while (getEarthquake(newId) != null) {
+            System.out.println("Id repetido:" + newId);
             newId = random.nextInt(Integer.MAX_VALUE);
         }
         return newId;
     }
-    public String toString(){
+
+    public String toString() {
         String result = "Data:\n[\n";
-        for(int i = 0 ; i<data.size() ; i++ ){
-            result+= data.get(i).toString()+"\n";
+        for (int i = 0; i < data.size(); i++) {
+            result += data.get(i).toString() + "\n";
         }
-        return result+"]";
+        return result + "]";
     }
-    public ArrayList<String[]> toArrayString(){
+
+    public ArrayList<String[]> toArrayString() {
         ArrayList<String[]> result = new ArrayList<String[]>();
-        result.add(new String[] {"Id","Province","Date","Depth","Lat","Lon","OriginFailure","Details","Magnitude","MagnitudeType"});
-        for(int i = 0 ; i<data.size() ; i++ ){
+        result.add(new String[]{"Id", "Province", "Date", "Depth", "Lat", 
+            "Lon", "OriginFailure", "Details", "Magnitude", "MagnitudeType"});
+        for (int i = 0; i < data.size(); i++) {
             result.add(data.get(i).toArrayString());
         }
         return result;
     }
-    private void saveFile() throws IOException{
+
+    /**
+     * Save the ArrayList of earthquakes in Data.csv
+     *
+     * @throws IOException
+     */
+    private void saveFile() throws IOException {
         sortByDate();
         CsvWriter csvWriter = new CsvWriter("Data.csv");
         ArrayList<String[]> toSave = toArrayString();
-        for(String[] fila:toSave){
+        for (String[] fila : toSave) {
             csvWriter.writeRecord(fila);
         }
         csvWriter.close();
     }
-    private void readFile(){
+
+    /**
+     * Read Data.csv and charge the ArrayList of earthquakes
+     */
+    private void readFile() {
         try {
             data = new ArrayList<Earthquake>();
             CsvReader reader = new CsvReader("Data.csv");
@@ -125,13 +181,16 @@ public class Data {
                 Float depth = Float.parseFloat(reader.get("Depth"));
                 Double lat = Double.parseDouble(reader.get("Lat"));
                 Double lon = Double.parseDouble(reader.get("Lon"));
-                FaultOrigin originFailure = FaultOrigin.valueOf(reader.get("OriginFailure"));
+                FaultOrigin originFailure = 
+                        FaultOrigin.valueOf(reader.get("OriginFailure"));
                 String details = reader.get("Details");
                 Float magnitude = Float.parseFloat(reader.get("Magnitude"));
-                MagnitudeType magnitudeType = MagnitudeType.valueOf(reader.get("MagnitudeType"));
-                Earthquake newData = new Earthquake(id,province,date,depth,lat,
-                lon,originFailure,details,magnitude,magnitudeType);
-                data.add(newData);        
+                MagnitudeType magnitudeType = 
+                        MagnitudeType.valueOf(reader.get("MagnitudeType"));
+                Earthquake newData = new Earthquake(id, province, date, depth, 
+                        lat, lon, originFailure, details, magnitude, 
+                        magnitudeType);
+                data.add(newData);
             }
 
             reader.close();
@@ -142,18 +201,28 @@ public class Data {
             e.printStackTrace();
         }
     }
-    
-    public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
+
+    /**
+     * A random select Enumeration
+     *
+     * @param <T>
+     * @param clazz
+     * @return random Enumeration selected
+     */
+    public static <T extends Enum<?>> T randomEnum(Class<T> clazz) {
         Random random = new Random();
         int x = random.nextInt(clazz.getEnumConstants().length);
         return clazz.getEnumConstants()[x];
     }
-    
-     private void sortByDate(){
-        Collections.sort(data, new Comparator<Earthquake>(){
-                @Override
-                public int compare(Earthquake earthquake1, Earthquake earthquake2) {
-                    return earthquake1.getDate().compareTo(earthquake2.getDate());
+
+    /**
+     * Sort earthquakes registraded by date
+     */
+    private void sortByDate() {
+        Collections.sort(data, new Comparator<Earthquake>() {
+            @Override
+            public int compare(Earthquake earthquake1, Earthquake earthquake2) {
+                return earthquake1.getDate().compareTo(earthquake2.getDate());
             }
         });
     }
