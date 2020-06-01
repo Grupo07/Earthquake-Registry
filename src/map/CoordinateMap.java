@@ -1,9 +1,8 @@
 package map;
 
-import java.awt.BasicStroke;
+
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,16 +11,35 @@ import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
 import org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.JMapViewerTree;
-import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
-import org.openstreetmap.gui.jmapviewer.Style;
-import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 
+/**
+ * Map that shows a marker in the given 
+ * latitude and longitude.
+ * 
+ * @author Luis Mariano Ramirez Segura
+ */
 public class CoordinateMap extends JFrame implements JMapViewerEventListener {
-
+    
+    /**
+     * Map container. 
+     * Used to set up the map itself and its interaction.
+     */
     private final JMapViewerTree treeMap = new JMapViewerTree("");
+    
+    /**
+     * Default level of map zoom
+     */
     private final int defaultZoomLevel = 9;
 
+    /**
+     * Constructor receives the marker latitude and longitude
+     * to setup the map look and location.
+     * 
+     * @param latitude marker's longitud
+     * @param longitude marker's latitude
+     * 
+     */
     public CoordinateMap(double latitude, double longitude) {
         super("Origen Del Sismo");
 
@@ -33,7 +51,11 @@ public class CoordinateMap extends JFrame implements JMapViewerEventListener {
 
         centerOnCoordinate(coordinate);
     }
-
+    
+    /**
+     * Sets up the window and map basic 
+     * configurations.
+     */
     private void setUpMap() {
 
         this.setSize(800, 800);
@@ -61,30 +83,44 @@ public class CoordinateMap extends JFrame implements JMapViewerEventListener {
         this.add(treeMap, BorderLayout.CENTER);
     }
 
+    /**
+     * Returns the map viewer object out of the treeMap member.
+     * @return map viewer
+     */
     private JMapViewer map() {
         return treeMap.getViewer();
     }
-
+    
+    /**
+     * Adds a marker to the map in the given location.
+     * 
+     * @param coordinate marker location
+     */
     private void addMarker(Coordinate coordinate) {
         CustomMarker marker = new CustomMarker("", coordinate);
         map().addMapMarker(marker);
     }
-
-
-    private static class CustomMarker extends MapMarkerCircle {
-        public CustomMarker(String name, Coordinate coordinate) {
-            super(null, name, coordinate, 10, MapMarker.STYLE.FIXED, new Style(Color.RED, Color.RED, new BasicStroke(1.23f), new Font("Helvetica", Font.BOLD, 25)));
-        }
-    }
-
+    
+    /**
+     * Centers the map view on a given coordinate.
+     * 
+     * @param coordinate coordinate to center to 
+     */
     private void centerOnCoordinate(Coordinate coordinate) {
         map().setDisplayPosition(coordinate, this.defaultZoomLevel);
     }
 
+    /**
+     * Pops up the map window.
+     */
     public void display() {
         this.setVisible(true);
     }
 
+    /**
+     * Required implemented method to enable map mouse interaction.
+     * @param command user action being performed in the map
+     */
     @Override
     public void processCommand(JMVCommandEvent command) {}
 
