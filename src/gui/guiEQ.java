@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.TableCellRenderer;
+import map.CoordinateMap;
 
 /**
  *
@@ -45,9 +46,9 @@ public class guiEQ extends javax.swing.JFrame {
         // Sets a button-like look to the edit/delete columns
         eTable.getColumn("Editar").setCellRenderer(new ButtonRenderer());
         eTable.getColumn("Eliminar").setCellRenderer(new ButtonRenderer());
+        eTable.getColumn("Mapa").setCellRenderer(new ButtonRenderer());
         
         updateRows();
-        
         
         setTableActionListener();
         
@@ -81,8 +82,10 @@ public class guiEQ extends javax.swing.JFrame {
         tableModel.setRowCount(0);
         ArrayList<Earthquake> earthquakes = data.getAll();
         for (Earthquake earthquake : earthquakes) {
-            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
             String date = earthquake.getDate().format(dateFormat);
+            String time = earthquake.getDate().format(timeFormat);
             String province = earthquake.getProvince().toString();
             String latitude = String.valueOf(earthquake.getLat());
             String longitude = String.valueOf(earthquake.getLon());
@@ -93,14 +96,14 @@ public class guiEQ extends javax.swing.JFrame {
             String details = earthquake.getDetails();
             
                     
-            tableModel.addRow(new Object[]{date, province, latitude, longitude, 
-                                      depth, magnitude, magnitudeType, 
-                                      failureOrigin, details, "Editar", "Eliminar"});
+            tableModel.addRow(new Object[]{date, time, province, latitude, longitude, 
+                                      depth, magnitude, magnitudeType, failureOrigin, details, 
+                                      "Ver", "Editar", "Eliminar"});
         }
     }
     
     /**
-     * Sets the table click listener for edit/delete 
+     * Sets the table click listener for edit/delete/map
      * earthquake action detection.
      */
     private void setTableActionListener() {
@@ -110,8 +113,14 @@ public class guiEQ extends javax.swing.JFrame {
                 int row = eTable.rowAtPoint(evt.getPoint());
                 int column = eTable.columnAtPoint(evt.getPoint());
                 
-                int editColumn = 9;
-                int removeColumn = 10;
+                int mapColumn = 10;
+                int editColumn = 11;
+                int removeColumn = 12;
+                
+                if (column == mapColumn) {
+                    new CoordinateMap(data.getAll().get(row).getLat(), data.getAll().get(row).getLon()).display();
+                }
+
                 
                 if (column == editColumn) {
                     
@@ -121,6 +130,9 @@ public class guiEQ extends javax.swing.JFrame {
                     deleteRowAt(row);
                 }
                 
+                if (column == mapColumn) {
+                    
+                }
 
             }
         });
@@ -219,11 +231,11 @@ public class guiEQ extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Fecha", "Provincia", "Latitud", "Longitud", "Profundidad", "Magnitud", "Clasificación", "Origen", "Descripción", "Editar", "Eliminar"
+                "Fecha", "Hora", "Provincia", "Latitud", "Longitud", "Profundidad", "Magnitud", "Clasificación", "Origen", "Descripción", "Mapa", "Editar", "Eliminar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, true, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -232,8 +244,7 @@ public class guiEQ extends javax.swing.JFrame {
         });
         tablePanel.setViewportView(eTable);
         if (eTable.getColumnModel().getColumnCount() > 0) {
-            eTable.getColumnModel().getColumn(0).setPreferredWidth(155);
-            eTable.getColumnModel().getColumn(7).setPreferredWidth(230);
+            eTable.getColumnModel().getColumn(8).setPreferredWidth(230);
         }
 
         dateInput.setDateFormatString("d-MMM-yyyy");
@@ -420,7 +431,7 @@ public class guiEQ extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1144, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(315, 315, 315)

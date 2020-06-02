@@ -65,7 +65,6 @@ public class CoordinateMap extends JFrame implements JMapViewerEventListener {
         map().addJMVListener(this);
 
         this.setLayout(new BorderLayout());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panel = new JPanel(new BorderLayout());
         JPanel infoPanel = new JPanel();
