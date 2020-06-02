@@ -3,11 +3,20 @@ package gui;
 
 import data.Data;
 import data.Earthquake;
+import java.awt.Component;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import java.time.format.DateTimeFormatter;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -24,16 +33,45 @@ public class guiEQ extends javax.swing.JFrame {
     ArrayList<Earthquake> listEQs = new ArrayList<>();
     
     
-
     public guiEQ() {
         initComponents();
         
+        // Center window on screen upon creation
+        this.setLocationRelativeTo(null);
+        
         this.data = new Data();
         this.tableModel = (DefaultTableModel) this.eTable.getModel();
+        
+        // Sets a button-like look to the edit/delete columns
+        eTable.getColumn("Editar").setCellRenderer(new ButtonRenderer());
+        eTable.getColumn("Eliminar").setCellRenderer(new ButtonRenderer());
+        
         updateRows();
+        
+        
         setTableActionListener();
         
-        
+    }
+    
+    /**
+     * Button cell renderer, makes the cells items of the column look like buttons.
+     */
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, 
+                                                       boolean hasFocus, int row, int column) {
+            if (isSelected) {
+                setForeground(table.getSelectionForeground());
+                setBackground(table.getSelectionBackground());
+            } else {
+                setForeground(table.getForeground());
+                setBackground(UIManager.getColor("Button.background"));
+            }
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
     }
     
     /**
@@ -54,10 +92,10 @@ public class guiEQ extends javax.swing.JFrame {
             String failureOrigin = earthquake.getOriginFailure().toString();
             String details = earthquake.getDetails();
             
+                    
             tableModel.addRow(new Object[]{date, province, latitude, longitude, 
                                       depth, magnitude, magnitudeType, 
-                                      failureOrigin, details});
-            
+                                      failureOrigin, details, "Edit", "Delete"});
         }
     }
     
@@ -70,11 +108,40 @@ public class guiEQ extends javax.swing.JFrame {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = eTable.rowAtPoint(evt.getPoint());
-                int col = eTable.columnAtPoint(evt.getPoint());
-                System.out.println(String.valueOf(row) + "," + String.valueOf(col));
+                int column = eTable.columnAtPoint(evt.getPoint());
+                
+                int editColumn = 9;
+                int removeColumn = 10;
+                
+                if (column == editColumn) {
+                    
+                }
+                
+                if (column == removeColumn) {
+                    deleteRowAt(row);
+                }
+                
+
             }
         });
     }
+    
+    private void deleteRowAt(int rowIndex) {
+        int deleteResponse = JOptionPane.showConfirmDialog(null, "Seguro que quieres eliminar este sismo?");
+        int deleteConfirmed = 0;
+        if (deleteResponse == deleteConfirmed) {
+        int earthquakeId = data.getAll().get(rowIndex).getId();
+        try {
+            
+            data.deleteEarthquake(earthquakeId);
+            updateRows();
+            
+        } catch (IOException e) {
+            Logger.getLogger(guiEQ.class.getName()).log(Level.SEVERE, null, e);
+        }
+        }
+    }
+    
     
     private void addEQtxtfield(){
         //Get data from txtFields
@@ -102,9 +169,6 @@ public class guiEQ extends javax.swing.JFrame {
         
     }
     
-    private void setDatos(){
-        
-    }
     
 
     /**
