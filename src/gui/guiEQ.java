@@ -1,52 +1,79 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package gui;
 
+import data.Data;
 import data.Earthquake;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import javax.swing.table.DefaultTableModel;
-import java.time.LocalDateTime;
-import <data>.*;
-import package.data;
-import package.data.*;
+import java.time.format.DateTimeFormatter;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  *
  * @author Ragnarok
+ *         Luis Mariano Ramírez Segura
+ * 
  */
 public class guiEQ extends javax.swing.JFrame {
     
-
-    DefaultTableModel tablRegistry = new DefaultTableModel();
+    private Data data;
+    private DefaultTableModel tableModel;
+    
+    private DefaultTableModel tablRegistry = new DefaultTableModel();
     ArrayList<Earthquake> listEQs = new ArrayList<>();
     
     
 
     public guiEQ() {
         initComponents();
-        setModelo();
         
-        /*tablRegistry.addColumn("ID");
-        tablRegistry.addColumn("Provincia");
-        tablRegistry.addColumn("Fecha");
-        tablRegistry.addColumn("Profundidad");
-        tablRegistry.addColumn("Latitud");
-        tablRegistry.addColumn("Longitud");
-        tablRegistry.addColumn("Epicentro");
-        tablRegistry.addColumn("Detalles");
-        tablRegistry.addColumn("Magnitud");*/
+        this.data = new Data();
+        this.tableModel = (DefaultTableModel) this.eTable.getModel();
+        updateRows();
+        setTableActionListener();
         
-        //tblRegistry.setModel(tablRegistry);*/
+        
     }
-    private void setModelo(){
-        String[] headers = {"ID","Provincia","Fecha","Profundidad","Latitud","Longitud","Epicentro","Detalles","Magnitud"};
-        tablRegistry.setColumnIdentifiers(headers);
-        tblRegistry.setModel(tablRegistry);
+    
+    /**
+     * Reloads the last earthquake data to the table rows.
+     */
+    private void updateRows() {
+        tableModel.setRowCount(0);
+        ArrayList<Earthquake> earthquakes = data.getAll();
+        for (Earthquake earthquake : earthquakes) {
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String date = earthquake.getDate().format(dateFormat);
+            String province = earthquake.getProvince().toString();
+            String latitude = String.valueOf(earthquake.getLat());
+            String longitude = String.valueOf(earthquake.getLon());
+            String depth = String.valueOf(earthquake.getDepth());
+            String magnitude = String.valueOf(earthquake.getMagnitude());
+            String magnitudeType = earthquake.getMagnitudeType().toString();
+            String failureOrigin = earthquake.getOriginFailure().toString();
+            String details = earthquake.getDetails();
+            
+            tableModel.addRow(new Object[]{date, province, latitude, longitude, 
+                                      depth, magnitude, magnitudeType, 
+                                      failureOrigin, details});
+            
+        }
+    }
+    
+    /**
+     * Sets the table click listener for edit/delete 
+     * earthquake action detection.
+     */
+    private void setTableActionListener() {
+        eTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = eTable.rowAtPoint(evt.getPoint());
+                int col = eTable.columnAtPoint(evt.getPoint());
+                System.out.println(String.valueOf(row) + "," + String.valueOf(col));
+            }
+        });
     }
     
     private void addEQtxtfield(){
@@ -59,7 +86,7 @@ public class guiEQ extends javax.swing.JFrame {
         String epicenter = txtEpicenter.getText();
         String details = txtDetails.getText();
         String magnitude = txtMagnitude.getText();
-        int id = generateId();
+        //int id = generateId();
         
         //Turn data gotten from txtFielfs into its correpondent values
         /*addEarthquake(Province province, LocalDateTime date, 
@@ -69,7 +96,7 @@ public class guiEQ extends javax.swing.JFrame {
                 lon,originFailure,details,magnitude);
         data.add(newData);
         saveFile();*/
-        Earthquake newdata = new Earthquake(id, )
+       // Earthquake newdata = new Earthquake(id, )
         
         
         
@@ -110,7 +137,7 @@ public class guiEQ extends javax.swing.JFrame {
         txtMagnitude = new javax.swing.JTextField();
         bttnAdd = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblRegistry = new javax.swing.JTable();
+        eTable = new javax.swing.JTable();
         bttnRefresh = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -163,18 +190,27 @@ public class guiEQ extends javax.swing.JFrame {
 
         bttnAdd.setText("Agregar");
 
-        tblRegistry.setModel(new javax.swing.table.DefaultTableModel(
+        eTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
-
+                "Fecha", "Provincia", "Latitud", "Longitud", "Profundidad", "Magnitud", "Clasificación", "Origen", "Detalles", "Editar", "Eliminar"
             }
-        ));
-        jScrollPane2.setViewportView(tblRegistry);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(eTable);
+        if (eTable.getColumnModel().getColumnCount() > 0) {
+            eTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+            eTable.getColumnModel().getColumn(7).setPreferredWidth(230);
+        }
 
         bttnRefresh.setText("Recargar");
         bttnRefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -227,7 +263,7 @@ public class guiEQ extends javax.swing.JFrame {
                         .addComponent(bttnAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bttnRefresh)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel1Layout.setVerticalGroup(
@@ -265,7 +301,7 @@ public class guiEQ extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 927, Short.MAX_VALUE)
+            .addGap(0, 1169, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,7 +314,7 @@ public class guiEQ extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 927, Short.MAX_VALUE)
+            .addGap(0, 1169, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,7 +327,7 @@ public class guiEQ extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 927, Short.MAX_VALUE)
+            .addGap(0, 1169, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,7 +342,7 @@ public class guiEQ extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(315, 315, 315)
@@ -342,8 +378,8 @@ public class guiEQ extends javax.swing.JFrame {
 
     private void bttnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnRefreshActionPerformed
         // TODO add your handling code here:
-        guiEQ swingJTable = new guiEQ(this, true);
-        swingJTable.setVisible(true);
+        //guiEQ swingJTable = new guiEQ(this, true);
+        //swingJTable.setVisible(true);
     }//GEN-LAST:event_bttnRefreshActionPerformed
 
     /**
@@ -384,6 +420,7 @@ public class guiEQ extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bttnAdd;
     private javax.swing.JButton bttnRefresh;
+    private javax.swing.JTable eTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -399,7 +436,6 @@ public class guiEQ extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable tblRegistry;
     private javax.swing.JTextField txtDate;
     private javax.swing.JTextField txtDepth;
     private javax.swing.JTextField txtDetails;
