@@ -212,7 +212,7 @@
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="secondInput" min="-2" pref="50" max="-2" attributes="0"/>
+                                      <Component id="secondsInput" min="-2" pref="50" max="-2" attributes="0"/>
                                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -250,7 +250,7 @@
                               </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="descriptionInput" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="descriptionPanel" min="-2" pref="200" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="actionBtn" min="-2" pref="123" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -265,13 +265,11 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="descriptionInput" alignment="0" pref="0" max="32767" attributes="0"/>
+                                      <Component id="descriptionPanel" alignment="0" pref="0" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                  <Component id="provinceInput" alignment="3" max="32767" attributes="0"/>
-                                                  <Component id="originInput" alignment="1" max="32767" attributes="0"/>
-                                              </Group>
+                                              <Component id="originInput" alignment="1" max="32767" attributes="0"/>
+                                              <Component id="provinceInput" min="-2" max="-2" attributes="0"/>
                                               <Component id="dateInput" max="32767" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
@@ -293,7 +291,7 @@
                                                   <Component id="longitudeInput" alignment="3" min="-2" max="-2" attributes="0"/>
                                                   <Component id="latitudeInput" alignment="3" min="-2" max="-2" attributes="0"/>
                                                   <Component id="magnitudeInput" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="secondInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="secondsInput" alignment="3" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                                   <Component id="hourInput" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -336,7 +334,7 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JSpinner" name="secondInput">
+                <Component class="javax.swing.JSpinner" name="secondsInput">
                   <Properties>
                     <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
                       <SpinnerModel initial="1" maximum="59" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
@@ -442,14 +440,14 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JScrollPane" name="descriptionInput">
+                <Container class="javax.swing.JScrollPane" name="descriptionPanel">
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
                   </AuxValues>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTextArea" name="jTextArea1">
+                    <Component class="javax.swing.JTextArea" name="descriptionInput">
                       <Properties>
                         <Property name="columns" type="int" value="20"/>
                         <Property name="lineWrap" type="boolean" value="true"/>
@@ -466,6 +464,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Cancelar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelBtnActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="actionBtn">
                   <Properties>

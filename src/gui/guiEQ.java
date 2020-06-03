@@ -3,13 +3,18 @@ package gui;
 
 import data.Data;
 import data.Earthquake;
+import data.FaultOrigin;
+import data.Province;
 import java.awt.Component;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import java.time.format.DateTimeFormatter;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -27,13 +32,26 @@ import map.CoordinateMap;
  */
 public class guiEQ extends javax.swing.JFrame {
     
+    /**
+     * Earthquakes interface. 
+     * Used for the data file manipulation.
+     */
     private Data data;
+    
+    /**
+     * Table interface. 
+     * Used for table manipulation.
+     */
     private DefaultTableModel tableModel;
     
-    private DefaultTableModel tablRegistry = new DefaultTableModel();
-    ArrayList<Earthquake> listEQs = new ArrayList<>();
+    /**
+     * Indicates if add or edit earthquake mode is active.
+     */
+    private int rowToEdit;
     
-    
+    /**
+     * This constructor initializes the window and table basic configurations.
+     */
     public guiEQ() {
         initComponents();
         
@@ -43,11 +61,21 @@ public class guiEQ extends javax.swing.JFrame {
         this.data = new Data();
         this.tableModel = (DefaultTableModel) this.eTable.getModel();
         
+        // Set current date as default value
+        this.dateInput.setDate(new Date());
+        
+        // Hide the cancel button, show only in edit earthquake mode
+        this.cancelBtn.setVisible(false);
+        
+        // When in non edit mode rowToEdit is -1
+        this.rowToEdit = -1;
+        
         // Sets a button-like look to the edit/delete columns
         eTable.getColumn("Editar").setCellRenderer(new ButtonRenderer());
         eTable.getColumn("Eliminar").setCellRenderer(new ButtonRenderer());
         eTable.getColumn("Mapa").setCellRenderer(new ButtonRenderer());
         
+        // Update the earthquakes rows to the last values
         updateRows();
         
         setTableActionListener();
@@ -93,7 +121,7 @@ public class guiEQ extends javax.swing.JFrame {
             String magnitude = String.valueOf(earthquake.getMagnitude());
             String magnitudeType = earthquake.getMagnitudeType().toString();
             String failureOrigin = earthquake.getOriginFailure().toString();
-            String details = earthquake.getDetails();
+            String details = earthquake.getDetails().replace(";", ",");
             
                     
             tableModel.addRow(new Object[]{date, time, province, latitude, longitude, 
@@ -120,24 +148,26 @@ public class guiEQ extends javax.swing.JFrame {
                 if (column == mapColumn) {
                     new CoordinateMap(data.getAll().get(row).getLat(), data.getAll().get(row).getLon()).display();
                 }
-
                 
                 if (column == editColumn) {
-                    
+                    rowToEdit = row;
+                    actionBtn.setText("Actualizar");
+                    cancelBtn.setVisible(true);
                 }
                 
                 if (column == removeColumn) {
                     deleteRowAt(row);
-                }
-                
-                if (column == mapColumn) {
-                    
                 }
 
             }
         });
     }
     
+    /**
+     * Deletes a table row and updates the table.
+     * 
+     * @param rowIndex row index to be deleted
+     */
     private void deleteRowAt(int rowIndex) {
         int deleteResponse = JOptionPane.showConfirmDialog(null, "Seguro que quieres eliminar este sismo?");
         int deleteConfirmed = 0;
@@ -153,34 +183,6 @@ public class guiEQ extends javax.swing.JFrame {
         }
         }
     }
-    
-    
-    private void addEQtxtfield(){
-        //Get data from txtFields
-//        String province = txtProvince.getText();
-//        String date = txtDate.getText();
-//        String depth = txtDepth.getText();
-//        String lat = txtLat.getText();
-//        String lon = txtLon.getText();
-//        String epicenter = txtEpicenter.getText();
-//        String details = txtDetails.getText();
-//        String magnitude = txtMagnitude.getText();
-        //int id = generateId();
-        
-        //Turn data gotten from txtFielfs into its correpondent values
-        /*addEarthquake(Province province, LocalDateTime date, 
-            float depth, double lat, double lon, 
-            FaultOrigin originFailure, String details, float magnitude)
-        Earthquake newData = new Earthquake(id,province,date,depth,lat,
-                lon,originFailure,details,magnitude);
-        data.add(newData);
-        saveFile();*/
-       // Earthquake newdata = new Earthquake(id, )
-        
-        
-        
-    }
-    
     
 
     /**
@@ -201,7 +203,7 @@ public class guiEQ extends javax.swing.JFrame {
         dateInput = new com.toedter.calendar.JDateChooser();
         hourInput = new javax.swing.JSpinner();
         minuteInput = new javax.swing.JSpinner();
-        secondInput = new javax.swing.JSpinner();
+        secondsInput = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -215,8 +217,8 @@ public class guiEQ extends javax.swing.JFrame {
         longitudeInput = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
         magnitudeInput = new javax.swing.JSpinner();
-        descriptionInput = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        descriptionPanel = new javax.swing.JScrollPane();
+        descriptionInput = new javax.swing.JTextArea();
         cancelBtn = new javax.swing.JButton();
         actionBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -253,7 +255,7 @@ public class guiEQ extends javax.swing.JFrame {
 
         minuteInput.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
 
-        secondInput.setModel(new javax.swing.SpinnerNumberModel(1, 0, 59, 1));
+        secondsInput.setModel(new javax.swing.SpinnerNumberModel(1, 0, 59, 1));
 
         jLabel2.setText("Hora");
 
@@ -281,14 +283,19 @@ public class guiEQ extends javax.swing.JFrame {
 
         magnitudeInput.setModel(new javax.swing.SpinnerNumberModel(0.1f, 0.1f, null, 1.0f));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Descripción\n");
-        descriptionInput.setViewportView(jTextArea1);
+        descriptionInput.setColumns(20);
+        descriptionInput.setLineWrap(true);
+        descriptionInput.setRows(5);
+        descriptionInput.setText("Descripción\n");
+        descriptionPanel.setViewportView(descriptionInput);
 
         cancelBtn.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         cancelBtn.setText("Cancelar");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
 
         actionBtn.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         actionBtn.setText("Agregar");
@@ -315,7 +322,7 @@ public class guiEQ extends javax.swing.JFrame {
                             .addComponent(minuteInput, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(secondInput, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(secondsInput, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)))
                     .addComponent(dateInput, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
@@ -342,7 +349,7 @@ public class guiEQ extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addComponent(originInput, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(descriptionInput, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(descriptionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(actionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -355,12 +362,11 @@ public class guiEQ extends javax.swing.JFrame {
                 .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(InputPanelLayout.createSequentialGroup()
                         .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(descriptionInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(descriptionPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(InputPanelLayout.createSequentialGroup()
                                 .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(provinceInput)
-                                        .addComponent(originInput))
+                                    .addComponent(originInput, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(provinceInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(dateInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,7 +385,7 @@ public class guiEQ extends javax.swing.JFrame {
                                         .addComponent(longitudeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(latitudeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(magnitudeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(secondInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(secondsInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(hourInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(minuteInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -450,9 +456,79 @@ public class guiEQ extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void actionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionBtnActionPerformed
-        // TODO add your handling code here:
+        int hour = (int) this.hourInput.getValue();
+        int minute = (int) this.minuteInput.getValue();
+        int seconds = (int) this.secondsInput.getValue();
+        Date date = this.dateInput.getDate();
+        
+        if (dataIsValid(date, hour, minute, seconds)) {
+            LocalDateTime dateTime = LocalDateTime.ofInstant(this.dateInput.getDate().toInstant(), ZoneId.systemDefault())
+                             .withHour(hour).withMinute(minute).withSecond(seconds).withNano(0);
+            Province province = Province.valueOf(this.provinceInput.getSelectedItem().toString());
+            double latitude = (double) this.latitudeInput.getValue();
+            double longitude = (double) this.longitudeInput.getValue();
+            FaultOrigin faultOrigin = FaultOrigin.valueOf(this.originInput.getSelectedItem().toString());
+            float depth = (float) this.depthInput.getValue();
+            float magnitude = (float) this.magnitudeInput.getValue();
+            String description = this.descriptionInput.getText().replace(",", ";");
+            
+            boolean inEditMode = (this.rowToEdit != -1);
+            if (inEditMode) {
+                System.out.println("Edit Mode!!");
+                int earthquakeId = data.getAll().get(this.rowToEdit).getId();
+                Earthquake updatedEarthquake = new Earthquake(earthquakeId, province, dateTime, 
+                                                              depth, latitude, longitude, faultOrigin, 
+                                                              description, magnitude);
+                try {
+                    this.data.updateEarthquake(earthquakeId, updatedEarthquake);
+                } catch (IOException ex) {
+                    Logger.getLogger(guiEQ.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }else {
+                try {
+                    System.out.println("Add Mode!!");
+                    this.data.addEarthquake(province, dateTime, depth, latitude, longitude, faultOrigin, description, magnitude);
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(guiEQ.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            updateRows();
+        }
     }//GEN-LAST:event_actionBtnActionPerformed
 
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        this.rowToEdit = -1;
+        this.actionBtn.setText("Agregar");
+        this.cancelBtn.setVisible(false);
+    }//GEN-LAST:event_cancelBtnActionPerformed
+
+    /**
+     * Validates the date and time inserted by the user.
+     * Shows warning messages if data is not valid.
+     * 
+     * @param date date inserted
+     * @param hour hour inserted
+     * @param minute minute inserted
+     * @param seconds seconds inserted
+     * @return data validity
+     */
+    private boolean dataIsValid(Date date, int hour, int minute, int seconds) {
+        if (date == null) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese una fecha");
+            return false;
+        }
+        
+        if (hour == 0 && minute == 0 && seconds == 0) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese una hora, minuto o segundo distinto a cero");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -495,7 +571,8 @@ public class guiEQ extends javax.swing.JFrame {
     private javax.swing.JButton cancelBtn;
     private com.toedter.calendar.JDateChooser dateInput;
     private javax.swing.JSpinner depthInput;
-    private javax.swing.JScrollPane descriptionInput;
+    private javax.swing.JTextArea descriptionInput;
+    private javax.swing.JScrollPane descriptionPanel;
     private javax.swing.JTable eTable;
     private javax.swing.JSpinner hourInput;
     private javax.swing.JLabel jLabel1;
@@ -508,14 +585,13 @@ public class guiEQ extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JSpinner latitudeInput;
     private javax.swing.JSpinner longitudeInput;
     private javax.swing.JSpinner magnitudeInput;
     private javax.swing.JSpinner minuteInput;
     private javax.swing.JComboBox<String> originInput;
     private javax.swing.JComboBox<String> provinceInput;
-    private javax.swing.JSpinner secondInput;
+    private javax.swing.JSpinner secondsInput;
     private javax.swing.JScrollPane tablePanel;
     // End of variables declaration//GEN-END:variables
 }
