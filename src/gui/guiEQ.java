@@ -200,7 +200,6 @@ public class guiEQ extends javax.swing.JFrame {
         tablePanel = new javax.swing.JScrollPane();
         eTable = new javax.swing.JTable();
         InputPanel = new javax.swing.JPanel();
-        dateInput = new com.toedter.calendar.JDateChooser();
         hourInput = new javax.swing.JSpinner();
         minuteInput = new javax.swing.JSpinner();
         secondsInput = new javax.swing.JSpinner();
@@ -221,6 +220,7 @@ public class guiEQ extends javax.swing.JFrame {
         descriptionInput = new javax.swing.JTextArea();
         cancelBtn = new javax.swing.JButton();
         actionBtn = new javax.swing.JButton();
+        dateInput = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -248,8 +248,6 @@ public class guiEQ extends javax.swing.JFrame {
         if (eTable.getColumnModel().getColumnCount() > 0) {
             eTable.getColumnModel().getColumn(8).setPreferredWidth(230);
         }
-
-        dateInput.setDateFormatString("d-MMM-yyyy");
 
         hourInput.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
 
@@ -311,20 +309,20 @@ public class guiEQ extends javax.swing.JFrame {
             InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InputPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(InputPanelLayout.createSequentialGroup()
                         .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(hourInput, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(25, 25, 25)
                         .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(minuteInput, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(26, 26, 26)
                         .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(secondsInput, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)))
-                    .addComponent(dateInput, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dateInput, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(InputPanelLayout.createSequentialGroup()
@@ -366,7 +364,7 @@ public class guiEQ extends javax.swing.JFrame {
                             .addGroup(InputPanelLayout.createSequentialGroup()
                                 .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(originInput, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(provinceInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(provinceInput)
                                     .addComponent(dateInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
