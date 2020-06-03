@@ -83,27 +83,6 @@ public class guiEQ extends javax.swing.JFrame {
     }
     
     /**
-     * Button cell renderer, makes the cells items of the column look like buttons.
-     */
-    class ButtonRenderer extends JButton implements TableCellRenderer {
-        public ButtonRenderer() {
-            setOpaque(true);
-        }
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, 
-                                                       boolean hasFocus, int row, int column) {
-            if (isSelected) {
-                setForeground(table.getSelectionForeground());
-                setBackground(table.getSelectionBackground());
-            } else {
-                setForeground(table.getForeground());
-                setBackground(UIManager.getColor("Button.background"));
-            }
-            setText((value == null) ? "" : value.toString());
-            return this;
-        }
-    }
-    
-    /**
      * Reloads the last earthquake data to the table rows.
      */
     private void updateRows() {
@@ -153,6 +132,7 @@ public class guiEQ extends javax.swing.JFrame {
                     rowToEdit = row;
                     actionBtn.setText("Actualizar");
                     cancelBtn.setVisible(true);
+                    setValuesToEdit();
                 }
                 
                 if (column == removeColumn) {
@@ -184,6 +164,25 @@ public class guiEQ extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Sets in the earthquake form the values to be updated.
+     */
+    private void setValuesToEdit() {
+        Earthquake toEdit = data.getAll().get(this.rowToEdit);
+        LocalDateTime date = toEdit.getDate();
+        this.dateInput.setDate(Date.from(date.atZone(ZoneId.systemDefault()).toInstant()));
+        this.hourInput.setValue(date.getHour());
+        this.minuteInput.setValue(date.getMinute());
+        this.secondsInput.setValue(date.getSecond());
+        this.provinceInput.setSelectedItem(toEdit.getProvince().toString());
+        this.latitudeInput.setValue(toEdit.getLat());
+        this.longitudeInput.setValue(toEdit.getLon());
+        this.originInput.setSelectedItem(toEdit.getOriginFailure().toString());
+        this.depthInput.setValue(toEdit.getDepth());
+        this.magnitudeInput.setValue(toEdit.getMagnitude());
+        String description = toEdit.getDetails().replace(";", ",");
+        this.descriptionInput.setText(description);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -309,7 +308,7 @@ public class guiEQ extends javax.swing.JFrame {
             InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InputPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(InputPanelLayout.createSequentialGroup()
                         .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -322,7 +321,7 @@ public class guiEQ extends javax.swing.JFrame {
                         .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(secondsInput, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)))
-                    .addComponent(dateInput, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dateInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25)
                 .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(InputPanelLayout.createSequentialGroup()
@@ -472,7 +471,6 @@ public class guiEQ extends javax.swing.JFrame {
             
             boolean inEditMode = (this.rowToEdit != -1);
             if (inEditMode) {
-                System.out.println("Edit Mode!!");
                 int earthquakeId = data.getAll().get(this.rowToEdit).getId();
                 Earthquake updatedEarthquake = new Earthquake(earthquakeId, province, dateTime, 
                                                               depth, latitude, longitude, faultOrigin, 
@@ -482,10 +480,11 @@ public class guiEQ extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(guiEQ.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                actionBtn.setText("Agregar");
+                cancelBtn.setVisible(false);
 
             }else {
                 try {
-                    System.out.println("Add Mode!!");
                     this.data.addEarthquake(province, dateTime, depth, latitude, longitude, faultOrigin, description, magnitude);
                     
                 } catch (IOException ex) {
