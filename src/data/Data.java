@@ -153,7 +153,7 @@ public class Data {
         Collections.sort(data, new Comparator<Earthquake>(){
                 @Override
                 public int compare(Earthquake earthquake1, Earthquake earthquake2) {
-                    return earthquake1.getDate().compareTo(earthquake2.getDate());
+                    return -earthquake1.getDate().compareTo(earthquake2.getDate());
             }
         });
     }
