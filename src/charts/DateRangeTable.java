@@ -27,7 +27,7 @@ public class DateRangeTable {
      * List of earthquakes that contain
      * the data processed to insert into the.
      */
-    protected ArrayList<Earthquake> earthquakes; 
+    private ArrayList<Earthquake> earthquakes; 
     
     public DateRangeTable(ArrayList<Earthquake> earthquakes, LocalDateTime start, LocalDateTime end) {
         
