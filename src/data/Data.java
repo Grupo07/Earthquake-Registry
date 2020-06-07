@@ -13,6 +13,7 @@ import java.util.Random;
 
 /**
  *In charge of manipulating the information of all the earthquakes registered in the system.
+ * 
  * @author Esteban Guzmán R.
  */
 public class Data {
@@ -27,15 +28,15 @@ public class Data {
      * Create and add a earthquake. Sort the list of Earthquake by date and save
      * the cvs file.
      *
-     * @param province
-     * @param date
+     * @param province earthquake's province
+     * @param date earthquake's date
      * @param depth depth in KM
      * @param lat latitude
      * @param lon longitud
-     * @param originFailure
-     * @param details
-     * @param magnitude magnitude of earthquake
-     * @throws IOException
+     * @param originFailure earthquake's seismic origin
+     * @param details earthquake's details
+     * @param magnitude earthquake's magnitude
+     * @throws IOException csv file reading exception
      */
     public void addEarthquake(Province province, LocalDateTime date,
             float depth, double lat, double lon,
@@ -84,7 +85,7 @@ public class Data {
      *
      * @param id id of earthquake to update
      * @param newData new earthquake update
-     * @throws IOException
+     * @throws IOException csv file reading exception
      */
     public void updateEarthquake(int id, Earthquake newData) throws IOException {
         data.set(getIndexEarthquake(id), newData);
@@ -95,7 +96,7 @@ public class Data {
      * Delete earthquake and save csv file
      *
      * @param id id of earthquake to delete
-     * @throws IOException
+     * @throws IOException csv file reading exception
      */
     public void deleteEarthquake(int id) throws IOException {
         data.remove(getIndexEarthquake(id));
@@ -154,7 +155,7 @@ public class Data {
     /**
      * Save the ArrayList of earthquakes in Data.csv
      *
-     * @throws IOException
+     * @throws IOException csv file reading exception
      */
     private void saveFile() throws IOException {
         sortByDate();
@@ -203,10 +204,10 @@ public class Data {
     }
 
     /**
-     * A random select Enumeration
+     * A random selected enumeration.
      *
-     * @param <T>
-     * @param clazz
+     * @param <T> enumeration class type
+     * @param clazz enumeration class
      * @return random Enumeration selected
      */
     public static <T extends Enum<?>> T randomEnum(Class<T> clazz) {
@@ -216,7 +217,7 @@ public class Data {
     }
 
     /**
-     * Sort earthquakes registraded by date
+     * Sort earthquakes registered by date
      */
     private void sortByDate() {
         Collections.sort(data, new Comparator<Earthquake>() {

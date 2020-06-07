@@ -2,7 +2,7 @@
 package data;
 
 /**
- * 
+ * Provinces of Costa Rica.
  * 
  * @author Esteban Guzmán R.
  */

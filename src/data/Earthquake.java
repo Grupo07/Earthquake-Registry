@@ -3,7 +3,7 @@ package data;
 import java.time.LocalDateTime;
 
 /**
- * Records the information of an earthquake
+ * Records the information of an earthquake.
  *
  * @author Esteban Guzmán R.
  */
