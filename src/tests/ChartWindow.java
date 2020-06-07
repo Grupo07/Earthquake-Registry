@@ -1,7 +1,10 @@
 
-package charts;
+package tests;
 
 
+import charts.BarChart;
+import charts.HistogramChart;
+import charts.PieChart;
 import data.Data;
 import data.Province;
 import java.util.ArrayList;
