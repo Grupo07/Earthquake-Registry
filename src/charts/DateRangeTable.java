@@ -23,12 +23,6 @@ public class DateRangeTable {
      */
     private JPanel panel;
     
-    /**
-     * List of earthquakes that contain
-     * the data processed to insert into the.
-     */
-    private ArrayList<Earthquake> earthquakes; 
-    
     public DateRangeTable(ArrayList<Earthquake> earthquakes, LocalDateTime start, LocalDateTime end) {
         
         DefaultTableModel tableModel = getEmptyTableModel();

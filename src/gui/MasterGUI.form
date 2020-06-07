@@ -202,18 +202,18 @@
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="hourLbl" min="-2" max="-2" attributes="0"/>
                                       <Component id="hourInput" min="-2" pref="50" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="minuteLbl" min="-2" max="-2" attributes="0"/>
                                       <Component id="minuteInput" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="secondsInput" min="-2" pref="50" max="-2" attributes="0"/>
-                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                      <Component id="secondLbl" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="dateInput" max="32767" attributes="0"/>
@@ -221,15 +221,15 @@
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                  <Component id="latitudeLbl" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="depthInput" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
-                                      <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="depthLbl" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                      <Component id="magnitudeLbl" min="-2" max="-2" attributes="0"/>
                                       <Component id="magnitudeInput" min="-2" pref="85" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -240,7 +240,7 @@
                                           <Component id="latitudeInput" min="-2" pref="85" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                              <Component id="longitudeLbl" min="-2" max="-2" attributes="0"/>
                                               <Component id="longitudeInput" min="-2" pref="85" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -274,15 +274,15 @@
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="minuteLbl" min="-2" max="-2" attributes="0"/>
                                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="depthLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="latitudeLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="longitudeLbl" alignment="3" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="hourLbl" min="-2" max="-2" attributes="0"/>
+                                              <Component id="secondLbl" min="-2" max="-2" attributes="0"/>
+                                              <Component id="magnitudeLbl" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -336,27 +336,27 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel2">
+                <Component class="javax.swing.JLabel" name="hourLbl">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Hora"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel3">
+                <Component class="javax.swing.JLabel" name="minuteLbl">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Minuto"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel4">
+                <Component class="javax.swing.JLabel" name="secondLbl">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Segundo"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel5">
+                <Component class="javax.swing.JLabel" name="latitudeLbl">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Latitud"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel6">
+                <Component class="javax.swing.JLabel" name="longitudeLbl">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Longitud"/>
                   </Properties>
@@ -397,7 +397,7 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel7">
+                <Component class="javax.swing.JLabel" name="depthLbl">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Profundidad"/>
                   </Properties>
@@ -423,7 +423,7 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel8">
+                <Component class="javax.swing.JLabel" name="magnitudeLbl">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Magnitud"/>
                   </Properties>
@@ -518,8 +518,8 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="startLabel" min="-2" pref="43" max="-2" attributes="0"/>
-                                          <Component id="endLabel" min="-2" pref="43" max="-2" attributes="0"/>
+                                          <Component id="startDateLbl" min="-2" pref="43" max="-2" attributes="0"/>
+                                          <Component id="endDateLbl" min="-2" pref="43" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -557,12 +557,12 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="endDateInputTable" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <Component id="endLabel" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="endDateLbl" min="-2" pref="33" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="startDateInputTable" pref="33" max="32767" attributes="0"/>
-                                  <Component id="startLabel" max="32767" attributes="0"/>
+                                  <Component id="startDateLbl" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -660,12 +660,12 @@
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="endDateInputTable">
             </Component>
-            <Component class="javax.swing.JLabel" name="endLabel">
+            <Component class="javax.swing.JLabel" name="endDateLbl">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fin"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="startLabel">
+            <Component class="javax.swing.JLabel" name="startDateLbl">
               <Properties>
                 <Property name="text" type="java.lang.String" value=" Inicio"/>
               </Properties>

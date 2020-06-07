@@ -281,8 +281,8 @@ public class MasterGUI extends javax.swing.JFrame {
         this.histogramProvince.setVisible(false);
         this.startDateInputTable.setVisible(false);
         this.endDateInputTable.setVisible(false);
-        this.startLabel.setVisible(false);
-        this.endLabel.setVisible(false);
+        this.startDateLbl.setVisible(false);
+        this.endDateLbl.setVisible(false);
     }
     
     /**
@@ -298,8 +298,8 @@ public class MasterGUI extends javax.swing.JFrame {
             hideAllChartInputs();
             this.startDateInputTable.setVisible(true);
             this.endDateInputTable.setVisible(true);
-            this.startLabel.setVisible(true);
-            this.endLabel.setVisible(true);
+            this.startDateLbl.setVisible(true);
+            this.endDateLbl.setVisible(true);
         }
     }
 
@@ -321,18 +321,18 @@ public class MasterGUI extends javax.swing.JFrame {
         hourInput = new javax.swing.JSpinner();
         minuteInput = new javax.swing.JSpinner();
         secondsInput = new javax.swing.JSpinner();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        hourLbl = new javax.swing.JLabel();
+        minuteLbl = new javax.swing.JLabel();
+        secondLbl = new javax.swing.JLabel();
+        latitudeLbl = new javax.swing.JLabel();
+        longitudeLbl = new javax.swing.JLabel();
         provinceInput = new javax.swing.JComboBox<>();
         originInput = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
+        depthLbl = new javax.swing.JLabel();
         depthInput = new javax.swing.JSpinner();
         latitudeInput = new javax.swing.JSpinner();
         longitudeInput = new javax.swing.JSpinner();
-        jLabel8 = new javax.swing.JLabel();
+        magnitudeLbl = new javax.swing.JLabel();
         magnitudeInput = new javax.swing.JSpinner();
         descriptionPanel = new javax.swing.JScrollPane();
         descriptionInput = new javax.swing.JTextArea();
@@ -349,8 +349,8 @@ public class MasterGUI extends javax.swing.JFrame {
         dateRangeChartBtn = new javax.swing.JButton();
         startDateInputTable = new com.toedter.calendar.JDateChooser();
         endDateInputTable = new com.toedter.calendar.JDateChooser();
-        endLabel = new javax.swing.JLabel();
-        startLabel = new javax.swing.JLabel();
+        endDateLbl = new javax.swing.JLabel();
+        startDateLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -384,21 +384,21 @@ public class MasterGUI extends javax.swing.JFrame {
 
         secondsInput.setModel(new javax.swing.SpinnerNumberModel(1, 0, 59, 1));
 
-        jLabel2.setText("Hora");
+        hourLbl.setText("Hora");
 
-        jLabel3.setText("Minuto");
+        minuteLbl.setText("Minuto");
 
-        jLabel4.setText("Segundo");
+        secondLbl.setText("Segundo");
 
-        jLabel5.setText("Latitud");
+        latitudeLbl.setText("Latitud");
 
-        jLabel6.setText("Longitud");
+        longitudeLbl.setText("Longitud");
 
         provinceInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SAN_JOSE", "GUANACASTE", "ALAJUELA", "HEREDIA", "CARTAGO", "LIMON", "PUNTARENAS", "MAR" }));
 
         originInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SUBDUCCION_DE_PLACA", "CHOQUE_DE_PLACAS", "TECTONICO_POR_SUBDUCCION", "DEFORMACION_INTERNA", "FALLAMIENTO_LOCAL", "TECTONICO_POR_FALLA_LOCAL" }));
 
-        jLabel7.setText("Profundidad");
+        depthLbl.setText("Profundidad");
 
         depthInput.setModel(new javax.swing.SpinnerNumberModel(0.1f, 0.1f, null, 1.0f));
 
@@ -406,7 +406,7 @@ public class MasterGUI extends javax.swing.JFrame {
 
         longitudeInput.setModel(new javax.swing.SpinnerNumberModel(-84.5d, null, null, 0.1d));
 
-        jLabel8.setText("Magnitud");
+        magnitudeLbl.setText("Magnitud");
 
         magnitudeInput.setModel(new javax.swing.SpinnerNumberModel(0.1f, 0.1f, null, 1.0f));
 
@@ -441,28 +441,28 @@ public class MasterGUI extends javax.swing.JFrame {
                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(inputPanelLayout.createSequentialGroup()
                         .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                            .addComponent(hourLbl)
                             .addComponent(hourInput, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(25, 25, 25)
                         .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
+                            .addComponent(minuteLbl)
                             .addComponent(minuteInput, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(26, 26, 26)
                         .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(secondsInput, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)))
+                            .addComponent(secondLbl)))
                     .addComponent(dateInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25)
                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(inputPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(latitudeLbl)
                         .addGap(193, 193, 193)
                         .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(depthInput, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
+                            .addComponent(depthLbl))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
+                            .addComponent(magnitudeLbl)
                             .addComponent(magnitudeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(inputPanelLayout.createSequentialGroup()
                         .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -471,7 +471,7 @@ public class MasterGUI extends javax.swing.JFrame {
                                 .addComponent(latitudeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
+                                    .addComponent(longitudeLbl)
                                     .addComponent(longitudeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(25, 25, 25)
                         .addComponent(originInput, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -497,14 +497,14 @@ public class MasterGUI extends javax.swing.JFrame {
                                     .addComponent(dateInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
+                                    .addComponent(minuteLbl)
                                     .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel6))
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel8))
+                                        .addComponent(depthLbl)
+                                        .addComponent(latitudeLbl)
+                                        .addComponent(longitudeLbl))
+                                    .addComponent(hourLbl)
+                                    .addComponent(secondLbl)
+                                    .addComponent(magnitudeLbl))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -593,9 +593,9 @@ public class MasterGUI extends javax.swing.JFrame {
             }
         });
 
-        endLabel.setText("Fin");
+        endDateLbl.setText("Fin");
 
-        startLabel.setText(" Inicio");
+        startDateLbl.setText(" Inicio");
 
         javax.swing.GroupLayout statisticsPanelLayout = new javax.swing.GroupLayout(statisticsPanel);
         statisticsPanel.setLayout(statisticsPanelLayout);
@@ -624,8 +624,8 @@ public class MasterGUI extends javax.swing.JFrame {
                                     .addComponent(startDateInputTable, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(7, 7, 7)
                                 .addGroup(statisticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(startLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(endLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(startDateLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(endDateLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
         statisticsPanelLayout.setVerticalGroup(
@@ -651,11 +651,11 @@ public class MasterGUI extends javax.swing.JFrame {
                     .addGroup(statisticsPanelLayout.createSequentialGroup()
                         .addGroup(statisticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(endDateInputTable, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(endLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(endDateLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(statisticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(startDateInputTable, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                            .addComponent(startLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(startDateLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
 
@@ -833,35 +833,35 @@ public class MasterGUI extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateInput;
     private javax.swing.JButton dateRangeChartBtn;
     private javax.swing.JSpinner depthInput;
+    private javax.swing.JLabel depthLbl;
     private javax.swing.JTextArea descriptionInput;
     private javax.swing.JScrollPane descriptionPanel;
     private javax.swing.JTable eTable;
     private com.toedter.calendar.JDateChooser endDateInputTable;
-    private javax.swing.JLabel endLabel;
+    private javax.swing.JLabel endDateLbl;
     private javax.swing.JButton histogramBtn;
     private javax.swing.JComboBox<String> histogramProvince;
     private javax.swing.JSpinner hourInput;
+    private javax.swing.JLabel hourLbl;
     private javax.swing.JPanel inputPanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JSpinner latitudeInput;
+    private javax.swing.JLabel latitudeLbl;
     private javax.swing.JSpinner longitudeInput;
+    private javax.swing.JLabel longitudeLbl;
     private javax.swing.JSpinner magnitudeInput;
+    private javax.swing.JLabel magnitudeLbl;
     private javax.swing.JSpinner minuteInput;
+    private javax.swing.JLabel minuteLbl;
     private javax.swing.JComboBox<String> originInput;
     private javax.swing.JButton pieChartBtn;
     private javax.swing.JComboBox<String> provinceInput;
     private javax.swing.JPanel registryPanel;
+    private javax.swing.JLabel secondLbl;
     private javax.swing.JSpinner secondsInput;
     private com.toedter.calendar.JDateChooser startDateInputTable;
-    private javax.swing.JLabel startLabel;
+    private javax.swing.JLabel startDateLbl;
     private javax.swing.JPanel statisticsPanel;
     private javax.swing.JScrollPane tablePanel;
     // End of variables declaration//GEN-END:variables
