@@ -394,7 +394,7 @@ public class MasterGUI extends javax.swing.JFrame {
 
         longitudeLbl.setText("Longitud");
 
-        provinceInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SAN_JOSE", "GUANACASTE", "ALAJUELA", "HEREDIA", "CARTAGO", "LIMON", "PUNTARENAS", "MAR" }));
+        provinceInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SAN_JOSE", "GUANACASTE", "ALAJUELA", "HEREDIA", "CARTAGO", "LIMON", "PUNTARENAS", "MAR", "NO_ASIGNADO" }));
 
         originInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SUBDUCCION_DE_PLACA", "CHOQUE_DE_PLACAS", "TECTONICO_POR_SUBDUCCION", "DEFORMACION_INTERNA", "FALLAMIENTO_LOCAL", "TECTONICO_POR_FALLA_LOCAL" }));
 
@@ -584,7 +584,7 @@ public class MasterGUI extends javax.swing.JFrame {
             }
         });
 
-        histogramProvince.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "SAN_JOSE", "GUANACASTE", "ALAJUELA", "HEREDIA", "CARTAGO", "LIMON", "PUNTARENAS", "MAR" }));
+        histogramProvince.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "SAN_JOSE", "GUANACASTE", "ALAJUELA", "HEREDIA", "CARTAGO", "LIMON", "PUNTARENAS", "MAR", "NO_ASIGNADO" }));
 
         dateRangeChartBtn.setText("Por rango de fechas");
         dateRangeChartBtn.addActionListener(new java.awt.event.ActionListener() {
